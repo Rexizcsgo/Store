@@ -4,12 +4,14 @@
     {
         "en" "Please wait. Your inventory hasn't been fetched yet."
         "chi" "你的库存正在载入中,请稍后."
+	"th" "กรุณารอสักครู่ กำลังทำการโหลด Inventory ของผู้เล่นอยู่"
     }
     
     "Inventory has been loaded"
     {
         "en" "Inventory loaded. Type {green}!store {default} to open store menu."
         "chi" "你的库存已加载,输入{green}!store{default}即可打开商店!"
+	"th" "Inventory ของผู้เล่นถูกโหลดโดยสมบูรณ์ พิมพ์ {green}!store {default}เพื่อเปิดหน้าร้านค้า"
     }
     
     "Item Bought"
@@ -17,18 +19,21 @@
         "#format" "{1:s}"
         "en" "{1}"
         "chi" "{1}"
+	"th" "{1}"
     }
     
     "Item not in case"
     {
         "en" "Skin not contain in case"
         "chi" "皮肤箱中不包含当前浏览的皮肤"
+	"th" "Skin ไม่ได้อยู่ในเคสนี้"
     }
     
     "Open case successful"
     {
         "en" "Case successfully opened"
         "chi" "开箱成功"
+	"th" "เปิดเคสได้สำเร็จ"
     }
     
     "Item Available"
@@ -36,12 +41,14 @@
         "#format" "{1:s},{2:d}"
         "en" "{1} ({2}Credits)"
         "chi" "{1} ({2}积分)"
+	"th" "{1} ({2}เครดิต)"
     }
     
     "credits"
     {
         "en" "Credits"
         "chi" "积分"
+	"th" "เครดิต"
     }
 
     "Item Plan Available"
@@ -49,6 +56,7 @@
         "#format" "{1:s}"
         "en" "{1} (Choose Plan)"
         "chi" "{1} (选择购买套餐)"
+	"th" "{1} (เลือกเวลา)"
     }
     
     "Item Preview Available"
@@ -56,12 +64,14 @@
         "#format" "{1:s}"
         "en" "{1} (View details)"
         "chi" "{1} (查看详细)"
+	"th" "{1} (ดูเพิ่มเติม)"
     }
     
     "Item not Buyable"
     {
         "en" "Non-sale products"
         "chi" "这皮肤是非卖品"
+	"th" "ไอเทมนี้ซื้อไม่ได้"
     }
 
     "Item Compose Available"
@@ -69,12 +79,14 @@
         "#format" "{1:s}"
         "en" "{1} (Compose required for this skin)"
         "chi" "{1} (需要合成)"
+	"th" "{1} (Compose required for this skin)"
     }
     
     "Preview Compose Available"
     {
         "en"  "Compose Skin"
         "chi" "合成皮肤"
+	"th"  "Compose Skin"
     }
     
     "Playerskins Level"
@@ -82,18 +94,21 @@
         "#format" "{1:d},{2:s}"
         "en"  "Skin Level: {1}  -  {2}"
         "chi" "皮肤等级: {1}  -  {2}"
+	"th" "เลเวล Skin : {1} - {2}"
     }
     
     "Open Case Available"
     {
         "en"  "Open skin case"
         "chi" "开启皮肤箱"
+	"th" "เปิด Skin เคส"
     }
     
     "Open Case not available"
     {
         "en"  "Skin case unavailable"
         "chi" "现在还不能开箱..."
+	"th" "ไม่สามารถเปิดเคส Skin ได้ในตอนนี้"
     }
 
     "Preview Available"
@@ -101,30 +116,35 @@
         "#format" "{1:d}"
         "en"  "Purchase ({1}Credits)"
         "chi" "购买这个皮肤 ({1}积分)"
+	"th" "ซื้อ ({1}เครดิต)"
     }
     
     "Preview Plan Available"
     {
         "en" "Choose purchase plan"
         "chi" "购买这个皮肤 (选择购买期限)"
+	"th" "เลือกเวลาของไอเทม"
     }
 
     "Item Preview"
     {
         "en" "Preview Skin"
         "chi" "预览这个皮肤"
+	"th" "Preview ไอเทม"
     }
     
     "Chat Preview"
     {
         "en" "Preview model will disappear in 30 seconds"
         "chi" "30秒后预览模型将消失"
+	"th" "โมเดลตัวอย่างจะหายไปใน 30 วินาที"
     }
     
     "Chat Preview Cooldown"
     {
         "en" "Preview on cooldown..."
         "chi" "预览功能正在冷却中..."
+	"th" "Preview mode กำลังคูลดาวน์อยู่"
     }
 
     "Item Equipped"
@@ -132,24 +152,28 @@
         "#format" "{1:s}"
         "en" "{1} [EQUIPPED]"
         "chi" "{1} [已装备]"
+	"th" "{1} [ใส่อยู่]"
     }
     
     "Item Equip"
     {
         "en" "Equip this item"
         "chi" "装备该物品"
+	"th" "สวมใส่ไอเทม"
     }
     
     "Item Unequip"
     {
         "en" "Unequip"
         "chi" "卸下该物品"
+	"th" "ถอดไอเทม"
     }
     
     "Item Use"
     {
         "en" "Use this item"
         "chi" "使用该物品"
+	"th" "ใช้ไอเทมนี้"
     }
     
     "Item Sell"
@@ -157,18 +181,21 @@
         "#format" "{1:d}"
         "en" "Sell for {1}"
         "chi" "以 {1} Credits的价格出售该物品"
+	"th" "ขายในราคา {1}"
     }
     
     "Item Gift"
     {
         "en" "Gift this item"
         "chi" "赠送该物品"
+	"th" "ส่งเป็นของขวัญ"
     }
 
     "Title Store"
     {
         "en" "Store Menu"
         "chi" "商店菜单"
+	"th" "เมนูร้านค้า - Store Menu"
     }
     
     "Title Credits"
@@ -176,6 +203,7 @@
         "#format" "{1:d}"
         "en" "Credits: {1}"
         "chi" "积分: {1}  充值请上论坛"
+	"th" "เครดิตของคุณ : {1}"
     }
     
     "Title Expiration"
@@ -183,18 +211,21 @@
         "#format" "{1:d},{2:d}"
         "en" "Expires in {1}d {2}h"
         "chi" "剩余时间: {1}天{2}小时"
+	"th" "หมดอายุใน {1} วัน {2} ชั่วโมง"
     }
     
     "Title Expiration PM"
     {
         "en" "No expiration limit."
         "chi" "剩余时间: 你活多久用多久"
+	"th" "ไม่มีวันหมดอายุ (ถาวร)"
     }
 
     "Title Gift"
     {
         "en" "Choose a player to send gift to"
         "chi" "选择欲赠送物品的玩家"
+	"th" "เลือกผู้เล่นที่จะส่งให้"
     }
     
     "Title Compose"
@@ -202,6 +233,7 @@
         "#format" "{1:s},{2:s},{3:s}"
         "en" "Compose {1} \n item①: {2}\n item②: {3}"
         "chi" "合成 {1} \n物品①: {2}\n物品②: {3}"
+	"th" "Compose {1} \n item①: {2}\n item②: {3}"
     }
     
     "unselect"
@@ -657,7 +689,7 @@
     
     "online earn credits"
     {
-        "en" "Eean credits by Online"
+        "en" "Earn credits by Online"
         "chi" "游戏在线获得积分"
     }
     
