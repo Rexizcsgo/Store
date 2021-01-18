@@ -3,7 +3,7 @@
 enum Trail
 {
     String:szMaterial[PLATFORM_MAX_PATH],
-    iSlot
+    trail_iSlot
 }
 
 static any g_eTrails[STORE_MAX_ITEMS][Trail];
@@ -16,7 +16,7 @@ public bool Trails_Config(KeyValues kv, int itemid)
     Store_SetDataIndex(itemid, g_iTrails);
     
     kv.GetString("material", g_eTrails[g_iTrails][szMaterial], PLATFORM_MAX_PATH);
-    g_eTrails[g_iTrails][iSlot] = kv.GetNum("slot");
+    g_eTrails[g_iTrails][trail_iSlot] = kv.GetNum("slot");
 
     if(FileExists(g_eTrails[g_iTrails][szMaterial], true))
     {
@@ -47,14 +47,14 @@ public int Trails_Equip(int client, int id)
     if(IsPlayerAlive(client))
         Store_SetClientTrail(client);
 
-    return g_eTrails[Store_GetDataIndex(id)][iSlot];
+    return g_eTrails[Store_GetDataIndex(id)][trail_iSlot];
 }
 
 public int Trails_Remove(int client, int id)
 {
     Store_SetClientTrail(client);
 
-    return  g_eTrails[Store_GetDataIndex(id)][iSlot];
+    return  g_eTrails[Store_GetDataIndex(id)][trail_iSlot];
 }
 
 void Store_RemoveClientTrail(int client, int slot)
@@ -117,7 +117,7 @@ void CreateTrail(int client, int itemid = -1, int slot = 0)
     {
         if((m_aEquipped[m_iNumEquipped] = Store_GetEquippedItem(client, "trail", i)) >= 0)
         {
-            if(i == g_eTrails[m_iData][iSlot])
+            if(i == g_eTrails[m_iData][trail_iSlot])
                 m_iCurrent = m_iNumEquipped;
             ++m_iNumEquipped;
         }

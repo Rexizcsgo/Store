@@ -4,9 +4,9 @@
 
 enum Item_Plan
 {
-    String:szName[ITEM_NAME_LENGTH],
-    iPrice,
-    iTime
+    String:itemplan_szName[ITEM_NAME_LENGTH],
+    itemplan_iPrice,
+    itemplan_iTime
 }
 
 enum Type_Handler
@@ -37,7 +37,7 @@ enum Client_Item
 
 enum Client_Data
 {
-    iId,
+    clientdata_iId,
     iUserId,
     String:szAuthId[32],
     iCredits,
@@ -55,11 +55,11 @@ enum Client_Data
 
 enum Menu_Handler
 {
-    String:szIdentifier[64],
-    String:szPlFile[64],
-    Handle:hPlugin,
-    Function:fnMenu,
-    Function:fnHandler
+    String:menuhandle_szIdentifier[64],
+    String:menuhandle_szPlFile[64],
+    Handle:menuhandle_hPlugin,
+    Function:menuhandle_fnMenu,
+    Function:menuhandle_fnHandler
 }
 
 enum Compose_Data

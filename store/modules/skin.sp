@@ -2,11 +2,11 @@
 
 enum PlayerSkin
 {
-    String:szModel[PLATFORM_MAX_PATH],
+    String:skin_szModel[PLATFORM_MAX_PATH],
     String:szArms[PLATFORM_MAX_PATH],
     String:szSound[PLATFORM_MAX_PATH],
     iLevel,
-    iTeam,
+    skin_iTeam,
     nSkin,
 }
 
@@ -142,7 +142,7 @@ public bool PlayerSkins_Config(KeyValues kv, int itemid)
 {
     Store_SetDataIndex(itemid, g_iPlayerSkins);
     
-    kv.GetString("model", g_ePlayerSkins[g_iPlayerSkins][szModel], PLATFORM_MAX_PATH);
+    kv.GetString("model", g_ePlayerSkins[g_iPlayerSkins][skin_szModel], PLATFORM_MAX_PATH);
     kv.GetString("arms", g_ePlayerSkins[g_iPlayerSkins][szArms], PLATFORM_MAX_PATH);
     kv.GetString("sound", g_ePlayerSkins[g_iPlayerSkins][szSound], PLATFORM_MAX_PATH);
     
@@ -150,12 +150,12 @@ public bool PlayerSkins_Config(KeyValues kv, int itemid)
     g_ePlayerSkins[g_iPlayerSkins][nSkin]  = kv.GetNum("skin", -1);
 
 #if defined Global_Skin
-    g_ePlayerSkins[g_iPlayerSkins][iTeam] = 4;
+    g_ePlayerSkins[g_iPlayerSkins][skin_iTeam] = 4;
 #else
-    g_ePlayerSkins[g_iPlayerSkins][iTeam] = kv.GetNum("team");
+    g_ePlayerSkins[g_iPlayerSkins][skin_iTeam] = kv.GetNum("team");
 #endif
 
-    if(FileExists(g_ePlayerSkins[g_iPlayerSkins][szModel], true))
+    if(FileExists(g_ePlayerSkins[g_iPlayerSkins][skin_szModel], true))
     {
         ++g_iPlayerSkins;
         return true;
@@ -169,8 +169,8 @@ public void PlayerSkins_OnMapStart()
     char szPath[PLATFORM_MAX_PATH], szPathStar[PLATFORM_MAX_PATH];
     for(int i = 0; i < g_iPlayerSkins; ++i)
     {
-        PrecacheModel(g_ePlayerSkins[i][szModel], false);
-        AddFileToDownloadsTable(g_ePlayerSkins[i][szModel]);
+        PrecacheModel(g_ePlayerSkins[i][skin_szModel], false);
+        AddFileToDownloadsTable(g_ePlayerSkins[i][skin_szModel]);
 
         if(g_ePlayerSkins[i][szArms][0] != 0)
         {
@@ -206,7 +206,7 @@ public int PlayerSkins_Equip(int client, int id)
 #if defined Global_Skin
     return 2;
 #else
-    return g_ePlayerSkins[Store_GetDataIndex(id)][iTeam]-2;
+    return g_ePlayerSkins[Store_GetDataIndex(id)][skin_iTeam]-2;
 #endif
 }
 
@@ -218,7 +218,7 @@ public int PlayerSkins_Remove(int client, int id)
 #if defined Global_Skin
     return 2;
 #else
-    return g_ePlayerSkins[Store_GetDataIndex(id)][iTeam]-2;
+    return g_ePlayerSkins[Store_GetDataIndex(id)][skin_iTeam]-2;
 #endif
 }
 
@@ -253,7 +253,7 @@ static void Store_SetClientModel(int client, int m_iData)
 #endif
 
     char skin_t[128], arms_t[128];
-    strcopy(skin_t, 128, g_ePlayerSkins[m_iData][szModel]);
+    strcopy(skin_t, 128, g_ePlayerSkins[m_iData][skin_szModel]);
     strcopy(arms_t, 128, g_ePlayerSkins[m_iData][szArms]);
 
     Action res = Store_CallPreSetModel(client, skin_t, arms_t);
@@ -373,7 +373,7 @@ void Store_PreviewSkin(int client, int itemid)
     FormatEx(m_szTargetName, 32, "Store_Preview_%d", m_iViewModel);
     DispatchKeyValue(m_iViewModel, "targetname", m_szTargetName);
     DispatchKeyValue(m_iViewModel, "spawnflags", "64");
-    DispatchKeyValue(m_iViewModel, "model", g_ePlayerSkins[g_eItems[itemid][iData]][szModel]);
+    DispatchKeyValue(m_iViewModel, "model", g_ePlayerSkins[g_eItems[itemid][iData]][skin_szModel]);
     DispatchKeyValue(m_iViewModel, "rendermode", "0");
     DispatchKeyValue(m_iViewModel, "renderfx", "0");
     DispatchKeyValue(m_iViewModel, "rendercolor", "255 255 255");
@@ -752,7 +752,7 @@ bool GetSkinData(int itemid, char skin[128], char arms[128])
     if (m_iData == -1)
         return false;
 
-    strcopy(skin, 128, g_ePlayerSkins[m_iData][szModel]);
+    strcopy(skin, 128, g_ePlayerSkins[m_iData][skin_szModel]);
     strcopy(arms, 128, g_ePlayerSkins[m_iData][szArms]);
     return true;
 }
@@ -761,7 +761,7 @@ int FindDataIndexByModel(const char[] skin)
 {
     for(int i = 0; i < g_iPlayerSkins; ++i)
     {
-        if (strcmp(g_ePlayerSkins[i][szModel], skin) == 0)
+        if (strcmp(g_ePlayerSkins[i][skin_szModel], skin) == 0)
             return i;
     }
     return -1;

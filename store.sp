@@ -512,18 +512,18 @@ public int Native_RegisterMenuHandler(Handle plugin, int numParams)
     int m_iId = g_iMenuHandlers;
     
     if(m_iHandler != -1)
-        return (g_eMenuHandlers[m_iId][hPlugin] == plugin) ? m_iId : -1; // Unique Plugin
+        return (g_eMenuHandlers[m_iId][menuhandle_hPlugin] == plugin) ? m_iId : -1; // Unique Plugin
  
     ++g_iMenuHandlers;
 
-    g_eMenuHandlers[m_iId][hPlugin] = plugin;
-    g_eMenuHandlers[m_iId][fnMenu] = GetNativeCell(2);
-    g_eMenuHandlers[m_iId][fnHandler] = GetNativeCell(3);
-    strcopy(g_eMenuHandlers[m_iId][szIdentifier], 64, m_szIdentifier);
+    g_eMenuHandlers[m_iId][menuhandle_hPlugin] = plugin;
+    g_eMenuHandlers[m_iId][menuhandle_fnMenu] = GetNativeCell(2);
+    g_eMenuHandlers[m_iId][menuhandle_fnHandler] = GetNativeCell(3);
+    strcopy(g_eMenuHandlers[m_iId][menuhandle_szIdentifier], 64, m_szIdentifier);
 
     char file[64];
     GetPluginFilename(plugin, file, 64);
-    strcopy(g_eMenuHandlers[m_iId][szPlFile], 64, file);
+    strcopy(g_eMenuHandlers[m_iId][menuhandle_szPlFile], 64, file);
 
     return m_iId;
 }
@@ -1301,10 +1301,10 @@ void DisplayStoreMenu(int client, int parent = -1, int last = -1)
 
                 for(int i = 0; i < g_iMenuHandlers; ++i)
                 {
-                    if(g_eMenuHandlers[i][hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][szPlFile]))
+                    if(g_eMenuHandlers[i][menuhandle_hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_szPlFile]))
                         continue;
     
-                    Call_StartFunction(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][fnMenu]);
+                    Call_StartFunction(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_fnMenu]);
                     Call_PushCellRef(m_hMenu);
                     Call_PushCell(client);
                     Call_PushCell(parent);
@@ -1414,9 +1414,9 @@ public int MenuHandler_Store(Menu menu, MenuAction action, int client, int param
                 if(g_iSelectedPlan[client]==-1)
                     m_iPrice = g_eItems[g_iSelectedItem[client]][iPrice];
                 else
-                    m_iPrice = g_ePlans[g_iSelectedItem[client]][g_iSelectedPlan[client]][iPrice];
+                    m_iPrice = g_ePlans[g_iSelectedItem[client]][g_iSelectedPlan[client]][itemplan_iPrice];
 
-                if(g_eClients[client][iCredits]>=m_iPrice && !Store_HasClientItem(client, g_iSelectedItem[client]))
+                if(g_eClients[client][iCredits] >= m_iPrice && !Store_HasClientItem(client, g_iSelectedItem[client]))
                     UTIL_BuyItem(client);
             }
             else if(param2 == 1)
@@ -1448,10 +1448,10 @@ public int MenuHandler_Store(Menu menu, MenuAction action, int client, int param
                 int ret;
                 for(int i = 0; i < g_iMenuHandlers; ++i)
                 {
-                    if(g_eMenuHandlers[i][hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][szPlFile]))
+                    if(g_eMenuHandlers[i][menuhandle_hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_szPlFile]))
                         continue;
                     
-                    Call_StartFunction(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][fnHandler]);
+                    Call_StartFunction(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_fnHandler]);
                     Call_PushCell(client);
                     Call_PushString(m_szId);
                     Call_PushCell(g_iSelectedItem[client]);
@@ -2003,11 +2003,11 @@ int UTIL_GetSkinSellPrice(int client, int itemid, int days)
     if(g_eItems[itemid][iPlans] > 0)
     {
         if(days > 30)
-            return (g_ePlans[itemid][2][iPrice] > 0) ? RoundToCeil(float(days) / 365.0 * g_ePlans[itemid][2][iPrice] * 0.85) : 100;
+            return (g_ePlans[itemid][2][itemplan_iPrice] > 0) ? RoundToCeil(float(days) / 365.0 * g_ePlans[itemid][2][itemplan_iPrice] * 0.85) : 100;
         else if(days > 7)
-            return (g_ePlans[itemid][1][iPrice] > 0) ? RoundToCeil(float(days) /  30.0 * g_ePlans[itemid][1][iPrice] * 0.85) : 100;
+            return (g_ePlans[itemid][1][itemplan_iPrice] > 0) ? RoundToCeil(float(days) /  30.0 * g_ePlans[itemid][1][itemplan_iPrice] * 0.85) : 100;
 
-        return     (g_ePlans[itemid][0][iPrice] > 0) ? RoundToCeil(float(days) /   1.0 * g_ePlans[itemid][0][iPrice] * 0.85) : 100;
+        return     (g_ePlans[itemid][0][itemplan_iPrice] > 0) ? RoundToCeil(float(days) /   1.0 * g_ePlans[itemid][0][itemplan_iPrice] * 0.85) : 100;
     }
 
     return RoundToCeil(float(g_eItems[itemid][iPrice]) / 180.0 * days * 0.85);
@@ -2288,9 +2288,9 @@ void DisplayItemMenu(int client, int itemid)
 
     for(int i = 0; i < g_iMenuHandlers; ++i)
     {
-        if(g_eMenuHandlers[i][hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][szPlFile]))
+        if(g_eMenuHandlers[i][menuhandle_hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_szPlFile]))
             continue;
-        Call_StartFunction(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][fnMenu]);
+        Call_StartFunction(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_fnMenu]);
         Call_PushCellRef(m_hMenu);
         Call_PushCell(client);
         Call_PushCell(itemid);
@@ -2311,7 +2311,7 @@ void DisplayPlanMenu(int client, int itemid)
 
     for(int i = 0; i < g_eItems[itemid][iPlans]; ++i)
     {
-        AddMenuItemEx(m_hMenu, (g_eClients[client][iCredits]>=g_ePlans[itemid][i][iPrice]?ITEMDRAW_DEFAULT:ITEMDRAW_DISABLED), "", "%T",  "Item Available", client, g_ePlans[itemid][i][szName], g_ePlans[itemid][i][iPrice]);
+        AddMenuItemEx(m_hMenu, (g_eClients[client][iCredits] >= g_ePlans[itemid][i][itemplan_iPrice] ? ITEMDRAW_DEFAULT:ITEMDRAW_DISABLED), "", "%T",  "Item Available", client, g_ePlans[itemid][i][itemplan_szName], g_ePlans[itemid][i][itemplan_iPrice]);
     }
     
     m_hMenu.Display(client, 0);
@@ -2500,9 +2500,9 @@ public int MenuHandler_Item(Menu menu, MenuAction action, int client, int param2
                 int ret;
                 for(int i=0;i<g_iMenuHandlers;++i)
                 {
-                    if(g_eMenuHandlers[i][hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][szPlFile]))
+                    if(g_eMenuHandlers[i][menuhandle_hPlugin] == null || !IsPluginRunning(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_szPlFile]))
                         continue;
-                    Call_StartFunction(g_eMenuHandlers[i][hPlugin], g_eMenuHandlers[i][fnHandler]);
+                    Call_StartFunction(g_eMenuHandlers[i][menuhandle_hPlugin], g_eMenuHandlers[i][menuhandle_fnHandler]);
                     Call_PushCell(client);
                     Call_PushString(m_szId);
                     Call_PushCell(g_iSelectedItem[client]);
@@ -3216,7 +3216,7 @@ public void SQLCallback_BuyItem(Database db, DBResultSet results, const char[] e
     if(plan==-1)
         m_iPrice = g_eItems[itemid][iPrice];
     else
-        m_iPrice = g_ePlans[itemid][plan][iPrice];    
+        m_iPrice = g_ePlans[itemid][plan][itemplan_iPrice];    
     
     if(dbCredits != g_eClients[client][iOriginalCredits])
     {
@@ -3238,7 +3238,7 @@ public void SQLCallback_BuyItem(Database db, DBResultSet results, const char[] e
     Call_StartForward(g_hOnClientBuyItem);
     Call_PushCell(client);
     Call_PushString(g_eItems[itemid][szUniqueId]);
-    Call_PushCell(plan==-1 ? 0 : g_ePlans[itemid][plan][iTime]);
+    Call_PushCell(plan == -1 ? 0 : g_ePlans[itemid][plan][itemplan_iTime]);
     Call_PushCell(m_iPrice);
     Call_Finish(ret);
 
@@ -3257,7 +3257,7 @@ public void SQLCallback_BuyItem(Database db, DBResultSet results, const char[] e
         g_eClientItems[client][m_iId][iId] = -1;
         g_eClientItems[client][m_iId][iUniqueId] = itemid;
         g_eClientItems[client][m_iId][iDateOfPurchase] = GetTime();
-        g_eClientItems[client][m_iId][iDateOfExpiration] = (plan==-1?0:(g_ePlans[itemid][plan][iTime]?GetTime()+g_ePlans[itemid][plan][iTime]:0));
+        g_eClientItems[client][m_iId][iDateOfExpiration] = (plan == -1 ? 0 : (g_ePlans[itemid][plan][itemplan_iTime] ? GetTime() +g_ePlans[itemid][plan][itemplan_iTime] : 0));
         g_eClientItems[client][m_iId][iPriceOfPurchase] = m_iPrice;
         g_eClientItems[client][m_iId][bSynced] = false; //true
         g_eClientItems[client][m_iId][bDeleted] = false;
@@ -3273,7 +3273,7 @@ public void SQLCallback_BuyItem(Database db, DBResultSet results, const char[] e
     Call_StartForward(g_hOnClientPurchased);
     Call_PushCell(client);
     Call_PushString(g_eItems[itemid][szUniqueId]);
-    Call_PushCell(plan==-1 ? 0 : g_ePlans[itemid][plan][iTime]);
+    Call_PushCell(plan == -1 ? 0 : g_ePlans[itemid][plan][itemplan_iTime]);
     Call_PushCell(m_iPrice);
     Call_Finish();
 
@@ -3748,25 +3748,25 @@ public void SQL_LoadChildren(Database db, DBResultSet item_child, const char[] e
 
             if(price_1d > 0)
             {
-                strcopy(g_ePlans[g_iItems][0][szName], 32, "1 day");
-                g_ePlans[g_iItems][0][iPrice] = price_1d;
-                g_ePlans[g_iItems][0][iTime] = 86400;
+                strcopy(g_ePlans[g_iItems][0][itemplan_szName], 32, "1 day");
+                g_ePlans[g_iItems][0][itemplan_iPrice] = price_1d;
+                g_ePlans[g_iItems][0][itemplan_iTime] = 86400;
                 g_eItems[g_iItems][iPlans]++;
             }
             
             if(price_1m > 0)
             {
-                strcopy(g_ePlans[g_iItems][1][szName], 32, "1 month");
-                g_ePlans[g_iItems][1][iPrice] = price_1m;
-                g_ePlans[g_iItems][1][iTime] = 2592000;
+                strcopy(g_ePlans[g_iItems][1][itemplan_szName], 32, "1 month");
+                g_ePlans[g_iItems][1][itemplan_iPrice] = price_1m;
+                g_ePlans[g_iItems][1][itemplan_iTime] = 2592000;
                 g_eItems[g_iItems][iPlans]++;
             }
             
             if(price_pm > 0)
             {
-                strcopy(g_ePlans[g_iItems][2][szName], 32, "Permanent");
-                g_ePlans[g_iItems][2][iPrice] = price_pm;
-                g_ePlans[g_iItems][2][iTime] = 0;
+                strcopy(g_ePlans[g_iItems][2][itemplan_szName], 32, "Permanent");
+                g_ePlans[g_iItems][2][itemplan_iPrice] = price_pm;
+                g_ePlans[g_iItems][2][itemplan_iTime] = 0;
                 g_eItems[g_iItems][iPlans]++;
             }
         }
@@ -3879,7 +3879,7 @@ int UTIL_GetTypeHandler(const char[] type)
 int UTIL_GetMenuHandler(const char[] id)
 {
     for(int i = 0; i < g_iMenuHandlers; ++i)
-    if(strcmp(g_eMenuHandlers[i][szIdentifier], id)==0)
+    if(strcmp(g_eMenuHandlers[i][menuhandle_szIdentifier], id) == 0)
         return i;
     return -1;
 }
@@ -4024,10 +4024,10 @@ int UTIL_GetLowestPrice(int itemid)
     if(g_eItems[itemid][iPlans]==0)
         return g_eItems[itemid][iPrice];
 
-    int m_iLowest=g_ePlans[itemid][0][iPrice];
+    int m_iLowest = g_ePlans[itemid][0][itemplan_iPrice];
     for(int i = 1; i < g_eItems[itemid][iPlans]; ++i)
-    if(m_iLowest>g_ePlans[itemid][i][iPrice])
-        m_iLowest = g_ePlans[itemid][i][iPrice];
+    if(m_iLowest > g_ePlans[itemid][i][itemplan_iPrice])
+        m_iLowest = g_ePlans[itemid][i][itemplan_iPrice];
 
     return m_iLowest;
 }
@@ -4037,10 +4037,10 @@ int UTIL_GetHighestPrice(int itemid)
     if(g_eItems[itemid][iPlans]==0)
         return g_eItems[itemid][iPrice];
 
-    int m_iHighest=g_ePlans[itemid][0][iPrice];
+    int m_iHighest = g_ePlans[itemid][0][itemplan_iPrice];
     for(int i = 1; i < g_eItems[itemid][iPlans]; ++i)
-    if(m_iHighest<g_ePlans[itemid][i][iPrice])
-        m_iHighest = g_ePlans[itemid][i][iPrice];
+    if(m_iHighest < g_ePlans[itemid][i][itemplan_iPrice])
+        m_iHighest = g_ePlans[itemid][i][itemplan_iPrice];
 
     return m_iHighest;
 }

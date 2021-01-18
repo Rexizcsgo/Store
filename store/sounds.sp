@@ -2,8 +2,8 @@
 
 enum Sound
 {
-    String:szName[128],
-    String:szSound[128],
+    String:sound_szName[128],
+    String:sound_szSound[128],
     Float:fVolume,
     iCooldown
 }
@@ -49,10 +49,10 @@ public void Sound_OnMapStart()
     char szPathStar[256];
     for(int i = 0; i < g_iSounds; ++i)
     {
-        Format(szPath, 256, "sound/%s", g_eSounds[i][szSound]);
+        Format(szPath, 256, "sound/%s", g_eSounds[i][sound_szSound]);
         if(FileExists(szPath, true))
         {
-            Format(szPathStar, 256, "*%s", g_eSounds[i][szSound]);
+            Format(szPathStar, 256, "*%s", g_eSounds[i][sound_szSound]);
             AddToStringTable(FindStringTable("soundprecache"), szPathStar);
             AddFileToDownloadsTable(szPath);
         }
@@ -73,8 +73,8 @@ public void Sound_Reset()
 public bool Sound_Config(KeyValues kv, int itemid)
 {
     Store_SetDataIndex(itemid, g_iSounds);
-    kv.GetString("sound", g_eSounds[g_iSounds][szSound], 128);
-    kv.GetString("shortname", g_eSounds[g_iSounds][szName], 128);
+    kv.GetString("sound", g_eSounds[g_iSounds][sound_szSound], 128);
+    kv.GetString("shortname", g_eSounds[g_iSounds][sound_szName], 128);
     g_eSounds[g_iSounds][fVolume] = kv.GetFloat("volume", 0.3);
     g_eSounds[g_iSounds][iCooldown] = kv.GetNum("cooldown", 30);
 
@@ -88,7 +88,7 @@ public bool Sound_Config(KeyValues kv, int itemid)
         g_eSounds[g_iSounds][fVolume] = 0.05;
     
     char szPath[256];
-    FormatEx(szPath, 256, "sound/%s", g_eSounds[g_iSounds][szSound]);
+    FormatEx(szPath, 256, "sound/%s", g_eSounds[g_iSounds][sound_szSound]);
     if(FileExists(szPath, true))
     {
         ++g_iSounds;
@@ -174,8 +174,8 @@ public Action Command_Cheer(int client, int args)
 void StartSoundToAll(int client)
 {
     char sound[256], name[64];
-    strcopy(sound, 256, g_eSounds[g_iSoundClient[client]][szSound]);
-    strcopy(name,   64, g_eSounds[g_iSoundClient[client]][szName]);
+    strcopy(sound, 256, g_eSounds[g_iSoundClient[client]][sound_szSound]);
+    strcopy(name,   64, g_eSounds[g_iSoundClient[client]][sound_szName]);
 
     Action res = Plugin_Continue;
     Call_StartForward(g_hOnCheerSound);
@@ -190,8 +190,8 @@ void StartSoundToAll(int client)
     if (res == Plugin_Continue)
     {
         // copy again
-        strcopy(sound, 256, g_eSounds[g_iSoundClient[client]][szSound]);
-        strcopy(name,   64, g_eSounds[g_iSoundClient[client]][szName]);
+        strcopy(sound, 256, g_eSounds[g_iSoundClient[client]][sound_szSound]);
+        strcopy(name,   64, g_eSounds[g_iSoundClient[client]][sound_szName]);
     }
 
     int[] targets = new int[MaxClients];
